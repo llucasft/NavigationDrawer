@@ -1,5 +1,7 @@
 package com.example.navigationdrawer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,9 +37,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+               enviarEmail();
             }
+
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -51,6 +54,21 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    public void enviarEmail(){
+        String celular = "tel: 61999090078";
+
+
+        Intent intent = new Intent( Intent.ACTION_SEND);
+
+        intent.putExtra( Intent.EXTRA_EMAIL, new String[]{"email@email.com"});
+        intent.putExtra( Intent.EXTRA_SUBJECT, "Contato de email");
+        intent.putExtra( Intent.EXTRA_TEXT, "Email padrão");
+
+        intent.setType("message/rfc822");
+
+        startActivity( Intent.createChooser(intent, "Compartilhar") );
     }
 
     @Override
